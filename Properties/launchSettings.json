@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FileHasher (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "FileHasher (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

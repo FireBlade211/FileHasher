@@ -1,0 +1,29 @@
+This list lists all the supported hash algorithms in FileHasher:
+
+- Adler32
+- CRC32
+- CRC64
+- ED2K
+- GOST
+- Keccak-224
+- Keccak-256
+- Keccak-384
+- Keccak-512
+- MD2
+- MD4
+- MD5
+- RIPEMD-128
+- RIPEMD-160
+- RIPEMD-256
+- RIPEMD-320
+- SHA-1
+- SHA-256
+- SHA-256 Base64
+- SHA-384
+- SHA-512
+- SHA3-224
+- SHA3-256
+- SHA3-384
+- SHA3-512
+- Tiger
+- Whirlpool

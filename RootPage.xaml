@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileHasher.RootPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FileHasher"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:animated="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals">
+
+    <Grid KeyboardAcceleratorPlacementMode="Hidden">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!--  AppTitleBar  -->
+            <RowDefinition Height="*" />
+            <!--  NavBar  -->
+        </Grid.RowDefinitions>
+
+        <Border
+            x:Name="AppTitleBar"
+            Grid.Column="1"
+            Height="{Binding ElementName=NavBar, Path=CompactPaneLength}"
+            Margin="48,0,0,0"
+            VerticalAlignment="Stretch"
+            AutomationProperties.AutomationId="AppTitleBar"
+            Canvas.ZIndex="1"
+            IsHitTestVisible="True">
+            <StackPanel VerticalAlignment="Stretch" Orientation="Horizontal">
+                <Image
+                    Width="18"
+                    VerticalAlignment="Center"
+                    Source="ms-appx:///Assets/Branding/LogoSmall_new.png" />
+                <TextBlock
+                    x:Name="AppTitle"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind local:Globals.AppTitleName}" />
+            </StackPanel>
+        </Border>
+
+        <NavigationView
+            x:Name="NavBar"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Canvas.ZIndex="0"
+            IsTabStop="False"
+            IsTitleBarAutoPaddingEnabled="True"
+            SelectionChanged="NavBar_SelectionChanged"
+            x:FieldModifier="public"
+            DisplayModeChanged="OnPaneDisplayModeChanged"
+            IsBackEnabled="{x:Bind Path=MainFrame.CanGoBack,Mode=OneWay}"
+            BackRequested="NavBar_BackRequested"
+            Background="{ThemeResource LayerFillColorDefaultBrush}">
+
+            <!--  Custom TitleBar with NavigationView L-Pattern Overwriting resources  -->
+            <NavigationView.Resources>
+                <!--  This top margin is the height of the custom titleBar  -->
+                <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
+                <Thickness x:Key="NavigationViewMinimalContentMargin">0,48,0,0</Thickness>
+                <Thickness x:Key="NavigationViewContentGridBorderThickness">1,1,0,0</Thickness>
+                <!--  This is the rounded corner on the Top left of the L Pattern  -->
+                <CornerRadius x:Key="NavigationViewContentGridCornerRadius">8,0,0,0</CornerRadius>
+            </NavigationView.Resources>
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox
+                    x:Name="SearchBox"
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    x:FieldModifier="public"
+                    KeyboardAcceleratorPlacementMode="Hidden"
+                    PlaceholderText="Search"
+                    TextChanged="SearchBox_TextChanged"
+                    QuerySubmitted="SearchBox_QuerySubmitted">
+                    <AutoSuggestBox.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Control" Key="F" Invoked="CtrlF_Invoked"/>
+                    </AutoSuggestBox.KeyboardAccelerators>
+
+                    <AutoSuggestBox.QueryIcon>
+                        <AnimatedIcon>
+                            <AnimatedIcon.Source>
+                                <animated:AnimatedFindVisualSource/>
+                            </AnimatedIcon.Source>
+                        </AnimatedIcon>
+                    </AutoSuggestBox.QueryIcon>
+                </AutoSuggestBox>
+            </NavigationView.AutoSuggestBox>
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Adler32">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEB95;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="CRC" SelectsOnInvoked="False">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8F9;" />
+                    </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="CRC32">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8F9;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="CRC64">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8F9;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+                <NavigationViewItem Content="ED2K">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE774;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="GOST">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE774;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Keccak" SelectsOnInvoked="False">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE755;" />
+                    </NavigationViewItem.Icon>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="Keccak-224">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE755;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Keccak-256">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE755;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Keccak-384">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE755;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="Keccak-512">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE755;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="MD" SelectsOnInvoked="False">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE8A6;" />
+                    </NavigationViewItem.Icon>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="MD2">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8A6;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="MD4">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8A6;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="MD5">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8A6;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+                <NavigationViewItem Content="RIPEMD" SelectsOnInvoked="False">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF158;" />
+                    </NavigationViewItem.Icon>
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="RIPEMD-128">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF158;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="RIPEMD-160">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF158;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="RIPEMD-256">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF158;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="RIPEMD-320">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF158;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+                <NavigationViewItem Content="SHA" SelectsOnInvoked="False">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE72E;" />
+                    </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="SHA-1">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE72E;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="SHA-256">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE72E;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="SHA-256 Base64">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8A6;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="SHA-384">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE72E;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                        <NavigationViewItem Content="SHA-512">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE72E;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+
+                        <NavigationViewItem Content="SHA3" SelectsOnInvoked="False">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE705;" />
+                            </NavigationViewItem.Icon>
+
+                            <NavigationViewItem.MenuItems>
+                                <NavigationViewItem Content="SHA3-224">
+                                    <NavigationViewItem.Icon>
+                                        <FontIcon Glyph="&#xE705;" />
+                                    </NavigationViewItem.Icon>
+                                </NavigationViewItem>
+                                <NavigationViewItem Content="SHA3-256">
+                                    <NavigationViewItem.Icon>
+                                        <FontIcon Glyph="&#xE705;" />
+                                    </NavigationViewItem.Icon>
+                                </NavigationViewItem>
+                                <NavigationViewItem Content="SHA3-384">
+                                    <NavigationViewItem.Icon>
+                                        <FontIcon Glyph="&#xE705;" />
+                                    </NavigationViewItem.Icon>
+                                </NavigationViewItem>
+                                <NavigationViewItem Content="SHA3-512">
+                                    <NavigationViewItem.Icon>
+                                        <FontIcon Glyph="&#xE705;" />
+                                    </NavigationViewItem.Icon>
+                                </NavigationViewItem>
+                            </NavigationViewItem.MenuItems>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Tiger">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xF158;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Whirlpool">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE7AD;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <Frame Name="MainFrame" Navigated="MainFrame_Navigated" NavigationFailed="MainFrame_NavigationFailed"/>
+            
+        </NavigationView>
+
+        <Grid.KeyboardAccelerators>
+            <KeyboardAccelerator Modifiers="Control" Key="F" Invoked="CtrlF_Invoked"/>
+        </Grid.KeyboardAccelerators>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="TitleBarStates">
+                <VisualState x:Name="Default" />
+                <VisualState x:Name="Compact">
+                    <VisualState.Setters>
+                        <Setter Target="AppTitleBar.Margin" Value="96,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Top">
+                    <VisualState.Setters>
+                        <Setter Target="AppTitleBar.Margin" Value="16,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="WindowActivationStates">
+                <VisualState x:Name="Activated" />
+                <VisualState x:Name="Deactivated">
+                    <VisualState.Setters>
+                        <Setter Target="AppTitle.Foreground" Value="{ThemeResource TextFillColorTertiaryBrush}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</Page>
