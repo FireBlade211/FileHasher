@@ -119,7 +119,7 @@ namespace FileHasher
 
         private async void bugRequestCard_Click(object sender, RoutedEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://github.com/FireBlade211/FileHasher/issues/new"));
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/FireBlade211/FileHasher/issues/new/choose"));
         }
 
         private async void githubCard_Click(object sender, RoutedEventArgs e)

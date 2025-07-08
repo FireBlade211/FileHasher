@@ -233,19 +233,25 @@ namespace FileHasher
         {
             var text = "A navigation error occured.";
 #if DEBUG
-            text += "\n- Debug Info -" +
+            text += "\n\n-- Debug Info --" +
                 $"\nMessage: {e.Exception.Message}" +
                 $"\nType: {e.Exception.GetType().FullName ?? e.Exception.GetType().Name}" +
                 $"\nPage type: {e.SourcePageType.FullName ?? e.SourcePageType.Name}" +
                 $"\nHRESULT: {e.Exception.HResult}" +
-                $"\nStack trace: {e.Exception.StackTrace}";
+                $"\nStack trace:\n{e.Exception.StackTrace}";
 #endif
 
             e.Handled = true;
 
             var dlg = new ContentDialog
             {
-                Content = new TextBlock { Text = text },
+                Content = new TextBlock
+                {
+                    Text = text,
+#if DEBUG
+                    IsTextSelectionEnabled = true
+#endif
+                },
                 Title = "Navigation Error",
                 CloseButtonText = "OK",
                 DefaultButton = ContentDialogButton.Close,

@@ -39,8 +39,11 @@ namespace FileHasher
                 }
                 else
                 {
-                    SourceGrid.Children.Add(GenHashButton);
-                    Grid.SetColumn(GenHashButton, 2);
+                    if (!SourceGrid.Children.Contains(GenHashButton))
+                    {
+                        SourceGrid.Children.Add(GenHashButton);
+                        Grid.SetColumn(GenHashButton, 2);
+                    }
                 }
             }
             else
