@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Linq;
+using Windows.System;
 
 #pragma warning disable CS8602
 #pragma warning disable CS8604
@@ -116,14 +117,14 @@ namespace FileHasher
             ConfigManager.SpatialSoundEnabled = spatialSoundBox.IsOn;
         }
 
-        private void bugRequestCard_Click(object sender, RoutedEventArgs e)
+        private async void bugRequestCard_Click(object sender, RoutedEventArgs e)
         {
-
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/FireBlade211/FileHasher/issues/new"));
         }
 
-        private void githubCard_Click(object sender, RoutedEventArgs e)
+        private async void githubCard_Click(object sender, RoutedEventArgs e)
         {
-
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/FireBlade211/FileHasher"));
         }
 
         private void SoundVolumeSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
